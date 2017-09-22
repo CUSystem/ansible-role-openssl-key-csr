@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-openssl genpkey -algorithm RSA -out {{ build_dir }}/{{ subject_name }}.key rsa_keygen_bits:{{ key_size }} 
+openssl genpkey -algorithm RSA -out {{ build_dir }}/{{ subject_name }}.key -pkeyopt rsa_keygen_bits:{{ key_size }} 
