@@ -1,0 +1,23 @@
+---
+
+- name: template over create key
+  template:
+    src: templates/{{ item }}.j2
+    dest: "{{ build_dir }}/{{ item }}"
+    mode: 0700
+  with_items:
+    - create_key.sh
+    - create_csr.sh
+
+- name: template over config
+  template:
+    src: templates/config.cnf.j2
+    dest: "{{ build_dir }}/config.cnf"
+    mode: 0600
+
+- name: create a key
+  command: "{{ build_dir }}/create_key.sh"
+
+- name: create the csr
+  command: "{{ build_dir }}/create_csr.sh"
+

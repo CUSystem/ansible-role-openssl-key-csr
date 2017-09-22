@@ -1,0 +1,27 @@
+---
+
+build_dir:     "/tmp"
+
+country_name:             US
+state_or_province_name:   Colorado
+locality_name:            Denver
+organization_names:
+  - Your Very Cool Organization
+organizational_unit_name: Your Very Cool Org Unit Name
+
+key_size:      4096
+subject_name:  default_server_name.domain.local
+managing_team: your_email@no-reply.com
+use_critical:  true
+
+key_usage:
+  - nonRepudiation
+  - digitalSignature
+  - keyEncipherment
+
+#alt_names can be empty... subject_name will _always_ be DNS.1
+alt_names:
+#  - www.{{ subject_name }}
+#  - email.{{ subject_name }}
+#  - another_alternate_name.domain.local
+

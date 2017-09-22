@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+openssl req -new -nodes -key {{ build_dir }}/{{ subject_name }}.key -config {{ build_dir }}/config.cnf -out {{ build_dir }}/{{ subject_name }}.csr
+
+#Handy check
+#openssl req -text -noout -verify -in {{ subject_name }}.csr
