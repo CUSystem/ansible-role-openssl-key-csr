@@ -1,6 +1,7 @@
 ---
 
 build_dir:     "/tmp"
+create_new_key: yes
 
 country_name:             US
 state_or_province_name:   Colorado

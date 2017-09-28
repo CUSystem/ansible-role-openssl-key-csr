@@ -22,6 +22,8 @@ Including an example of how to use your role (for instance, with variables passe
   vars:
     #Watch out because this is where your *PRIVATE* key will drop.
     build_dir:     /tmp
+    #If yes this will cut a new key which you might not want if you've already ansible-vault'd your original.
+    create_new_key: yes
 
     country_name:             US
     state_or_province_name:   Colorado

@@ -17,6 +17,7 @@
 
 - name: create a key
   command: "{{ build_dir }}/create_key.sh"
+  when: create_new_key
 
 - name: create the csr
   command: "{{ build_dir }}/create_csr.sh"
