@@ -1,24 +1,27 @@
 ---
 
-- name: template over create key
-  template:
-    src: templates/{{ item }}.j2
-    dest: "{{ build_dir }}/{{ item }}"
-    mode: 0700
-  with_items:
-    - create_key.sh
-    - create_csr.sh
-
 - name: template over config
   template:
     src: templates/config.cnf.j2
-    dest: "{{ build_dir }}/config.cnf"
+    dest: "{{ script_dir }}/config.cnf"
     mode: 0600
 
-- name: create a key
-  command: "{{ build_dir }}/create_key.sh"
-  when: create_new_key
+- stat:
+    path: "{{ build_dir }}/{{ subject_name }}.key"
+  register: key_file
+
+#- fail: 
+#    msg: "SAFETY: Cannot overwrite the key file. Exists at {{ build_dir }}/{{ subject_name }}.key and the create_new_key variable is false."
+#  when: key_file.stat.exists is defined and key_file.stat.exists and not create_new_key
+
+- name: create a key if one doesn't exist or the create_new_key flag is set
+  command: "openssl genpkey -algorithm RSA -out {{ build_dir }}/{{ subject_name }}.key -pkeyopt rsa_keygen_bits:4096"
+  when: create_new_key or (key_file.stat.exists is defined and not key_file.stat.exists)
 
 - name: create the csr
-  command: "{{ build_dir }}/create_csr.sh"
+  command: "openssl req -new -nodes -key {{ build_dir }}/{{ subject_name }}.key -config {{ script_dir }}/config.cnf -out {{ build_dir }}/{{ subject_name }}.csr"
 
+- name: tidy up
+  file:
+    path: "{{ script_dir }}/config.cnf"
+    state: absent

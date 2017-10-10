@@ -1,7 +1,8 @@
 ---
 
-build_dir:     "/tmp"
-create_new_key: yes
+build_dir:     "./files"
+script_dir:    "/tmp"
+create_new_key: no 
 
 country_name:             US
 state_or_province_name:   Colorado
