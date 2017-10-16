@@ -15,11 +15,11 @@
 #  when: key_file.stat.exists is defined and key_file.stat.exists and not create_new_key
 
 - name: create a key if one doesn't exist or the create_new_key flag is set
-  command: "openssl genpkey -algorithm RSA -out {{ build_dir }}/{{ subject_name }}.key -pkeyopt rsa_keygen_bits:4096"
+  command: "openssl genpkey -algorithm RSA -out {{ build_dir }}/{{ subject_name }}.key -pkeyopt rsa_keygen_bits:2048"
   when: create_new_key or (key_file.stat.exists is defined and not key_file.stat.exists)
 
 - name: create the csr
-  command: "openssl req -new -nodes -key {{ build_dir }}/{{ subject_name }}.key -config {{ script_dir }}/config.cnf -out {{ build_dir }}/{{ subject_name }}.csr"
+  command: "openssl req -new -sha256 -nodes -key {{ build_dir }}/{{ subject_name }}.key -config {{ script_dir }}/config.cnf -out {{ build_dir }}/{{ subject_name }}.csr"
 
 - name: tidy up
   file:
